@@ -1,28 +1,28 @@
 //referenced activity 18.23
 
-const WebpackPwaManifest = require('webpack-pwa-manifest');
-const path = require('path');
+const WebpackPwaManifest = require("webpack-pwa-manifest");
+const path = require("path");
 
 const config = {
   entry: {
-    app: './assets/js/index.js',
-    favorites: './assets/js/favorites.js',
-    topic: './assets/js/topic.js',
+    app: "./assets/js/index.js",
+    favorites: "./assets/js/favorites.js",
+    topic: "./assets/js/topic.js",
   },
   output: {
-    path: __dirname + '/dist',
-    filename: '[name].bundle.js',
+    path: __dirname + "/dist",
+    filename: "[name].bundle.js",
   },
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ["@babel/preset-env"],
           },
         },
       },
@@ -31,18 +31,19 @@ const config = {
   plugins: [
     new WebpackPwaManifest({
       fingerprints: false,
-      name: 'Newsy app',
-      short_name: 'Newsy',
-      description: 'An application that allows you to view different news articles and save your favorites.',
-      background_color: '#01579b',
-      theme_color: '#ffffff',
-      'theme-color': '#ffffff',
-      start_url: '/',
+      name: "Newsy app",
+      short_name: "Newsy",
+      description:
+        "An application that allows you to view different news articles and save your favorites.",
+      background_color: "#01579b",
+      theme_color: "#ffffff",
+      "theme-color": "#ffffff",
+      start_url: "/",
       icons: [
         {
-          src: path.resolve('assets/images/icons/android-chrome-192x192.png'),
+          src: path.resolve("assets/images/icons/android-chrome-192x192.png"),
           sizes: [96, 128, 192, 256, 384, 512],
-          destination: path.join('assets', 'icons'),
+          destination: path.join("assets", "icons"),
         },
       ],
     }),
