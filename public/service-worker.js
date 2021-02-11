@@ -11,6 +11,7 @@ const FILES_TO_CACHE = [
   "/index.js",
   "/manifest.webmanifest",
   "/dist/bundle.js",
+  "/src/app.js",
 ];
 
 // install
