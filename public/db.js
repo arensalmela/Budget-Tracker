@@ -1,35 +1,42 @@
-// For support on different browsers
+const request = window.indexedDB.open("budget_DB", 1);
 
-const { response } = require("express");
-const { post } = require("../routes/api");
+// Create schema
+request.onupgradeneeded = (event) => {
+  const db = event.target.result;
 
-const indexedDB =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
+  // Creates an object store with a amountID keypath that can be used to query on.
+  const budgetStore = db.createObjectStore("budget_DB", {
+    keyPath: "id",
+    autoIncrement: true,
+  });
+  // Creates a amountIndex that we can query on.
+  budgetStore.createIndex("amountIndex", "amount");
+};
 
-const request = indexedDB.open("budget", 1);
+// Opens a transaction, accesses the budget_DB objectStore and amountIndex.
+request.onsuccess = () => {
+  const db = request.result;
+  const transaction = db.transaction(["budget_DB"], "readwrite");
+  const budgetStore = transaction.objectStore("budget_DB");
+  const amountIndex = budgetStore.index("amountIndex");
 
-function checkDB() {
-  const transaction = db.transaction(["pending"], "readwrite");
-  const store = transaction.objectStore("pending");
-  const getAll = store.getAll();
-  getAll.onSuccess = function () {
-    if (getAll.result.length > 0) {
-      fetch("/api/transaction/bulk", {
-        method: "POST",
-        body: JSON.stringify(getAll.result),
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        return response.json();
-      });
-    }
+  // Adds data to our objectStore
+  budgetStore.add({
+    amountID: " how do i get the id=t-name value here????????",
+    amount: " how do i get the id=t-amount value here?????????",
+  });
+
+  // Return an item by keyPath
+  const getRequest = budgetStore.get("1");
+  getRequest.onsuccess = () => {
+    console.log(getRequest.result);
   };
-}
 
-window.addEventListener("online", checkDB());
+  // Return an item by index
+  const getRequestIdx = amountIndex.getAll("complete");
+  getRequestIdx.onsuccess = () => {
+    console.log(getRequestIdx.result);
+  };
+};
+
+
