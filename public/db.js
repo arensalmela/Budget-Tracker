@@ -1,5 +1,7 @@
 //colaborated with https://github.com/ReindeerCode
 
+window.addEventListener("online", backOnline());
+
 const request = window.indexedDB.open("budget_DB", 1);
 let db;
 
