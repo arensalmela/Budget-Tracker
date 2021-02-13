@@ -18,14 +18,14 @@ request.onsuccess = () => {
   db = request.result;
 };
 
+// Called in index.js
+
 function saveRecord(data) {
   const transaction = db.transaction(["budget_DB"], "readwrite");
   const budgetStore = transaction.objectStore("budget_DB");
-  //const amountIndex = budgetStore.index("amountIndex");
 
   // Adds data to our objectStore
   budgetStore.add(data);
-  //backOnline();
 }
 
 function backOnline() {
